@@ -1,0 +1,28 @@
+.cities{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+.title{
+  font-size: 40px;
+  color: white;
+  text-shadow: 1px 1px 4px #000000;
+}
+
+.cityCont{
+  height: 60vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.btnCont{
+  width: 280px;
+  margin-right: auto;
+  margin-left: auto;
+}

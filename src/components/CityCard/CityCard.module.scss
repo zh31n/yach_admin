@@ -1,0 +1,44 @@
+.name{
+  font-size: 18px;
+  color: white;
+  text-shadow: 1px 1px 7px black;
+  margin-bottom: 1rem;
+}
+
+.card{
+  width: 400px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.6);
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.photo{
+  width: 100px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.photoC{
+  width: 100px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.btn{
+  width: 120px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  height: 30px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
