@@ -7,10 +7,10 @@
   color: white;
   gap: 1rem;
   text-shadow: 1px 1px 7px rgba(0, 0, 0, 0.45);
-  padding-top: 1rem;
 
   .coord {
     font-size: 30px;
+    padding-top: 1rem;
   }
 
 
@@ -56,7 +56,7 @@
   }
 
   .addYacht{
-    width: 150px;
+    width: 30px;
     height: 30px;
     display: flex;
     justify-content: center;
@@ -64,7 +64,10 @@
     background-color: white;
     border: 1px solid silver;
     margin-top: 10px;
-    border-radius: 12px;
+    border-radius: 50%;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
   }
 }
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Yacht = () => {
+const Yacht = (props:any) => {
     return (
-        <div>
+        <div className=''>
             
         </div>
     );

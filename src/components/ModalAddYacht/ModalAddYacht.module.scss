@@ -1,0 +1,34 @@
+.modal{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalInner{
+  width: 700px;
+  height: 60vh;
+  background-color: white;
+  border-radius: 20px;
+  padding-top: 2rem;
+}
+
+.inpCont{
+  height: 85%;
+  overflow: auto;
+}
+
+.btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  margin-top: 0px;
+}
