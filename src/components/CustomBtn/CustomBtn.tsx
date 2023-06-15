@@ -3,7 +3,7 @@ import s from './CustomBtn.module.scss'
 
 const CustomBtn = (props:any) => {
     return (
-        <div className={s.btn}>{props.title}</div>
+        <div onClick={() => props.setActive(true)} className={s.btn}>{props.title}</div>
     );
 };
 

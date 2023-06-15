@@ -6,7 +6,7 @@ let initialState = {
             {name: 'Ярославль', id: 2},
             {name: 'Воронеж', id: 3},
             {name: 'Адлер', id: 4},
-            {name: 'Новгород', id: 5}
+            {name: 'Новгород', id: 5},
         ],
         cityPage: {
             city: 'Воронеж',

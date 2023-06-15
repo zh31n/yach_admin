@@ -3,6 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Cities from "./pages/Cities/Cities";
 import City from "./pages/City/City";
+import Yachta from "./pages/Yachta/Yachta";
 
 
 const App = (props:any) => {
@@ -13,6 +14,7 @@ const App = (props:any) => {
                 <Route path={'/'} element={<Login />}/>
                 <Route path={'/cities'} element={<Cities />} />
                 <Route path={'/cities/*'} element={<City />} />
+                <Route path={'/yachts/*'} element={<Yachta />} />
             </Routes>
         </div>
     )
