@@ -11,12 +11,12 @@ const ModalAddCity = (props: any) => {
     const [err, setErr] = useState([]);
 
     const data = [
-        {text: 'Город', type: 'text', value: city, setValue: setCity},
-        {text: 'Страна', type: 'text', value: country, setValue: setCountry},
-        {text: 'Услуги', type: 'text', value: services, setValue: setServices},
+        {text: 'Город', type: 'text', value: city, setValue: setCity, id: 1},
+        {text: 'Страна', type: 'text', value: country, setValue: setCountry, id: 2},
     ];
 
-    const inputItems = data.map(i => <CustomInput text={i.text} type={i.type} value={i.value} setValue={i.setValue}/>)
+    const inputItems = data.map(i => <CustomInput text={i.text} type={i.type} value={i.value} setValue={i.setValue}
+                                                  key={i.id}/>)
 
     const addCity = () => {
         Api.addTown(city, country, services).then(res => {

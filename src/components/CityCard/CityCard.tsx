@@ -7,18 +7,27 @@ const CityCard = (props: any) => {
 
     const onClickDelete = (e) => {
         e.preventDefault();
-        // Api.deleteTown(props.id)
-        console.log(props.id)
+        Api.deleteTown(props.id).then(res => {
+            Api.getTowns().then(res => {
+                props.setCities(res.data)
+            })
+        })
     }
     const onClickChange = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        props.setCity({
+            name: props.name,
+            country: props.country,
+        });
+        props.setActive(true);
+
     }
 
     return (
         <NavLink to={'/cities/' + props.id} className={s.card}>
-            <div className={s.name}>{props.name}</div>
+            <div className={s.name}>{props.name},{props.country}</div>
             <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
-                <div onClick={onClickDelete}  className={s.btn}>Удалить</div>
+                <div onClick={onClickDelete} className={s.btn}>Удалить</div>
                 <div onClick={onClickChange} className={s.btn}>Изменить</div>
             </div>
         </NavLink>

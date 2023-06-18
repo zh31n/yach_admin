@@ -4,7 +4,6 @@ import s from './CustomInput.module.scss';
 const CustomInput = (props:any) => {
 
    const onchange = (e) => {
-
        props.setValue(e.target.value)
    }
 
@@ -12,7 +11,7 @@ const CustomInput = (props:any) => {
         <div className={s.container}>
             <span className={s.textInp}>{props.text}*</span>
             <div className="">
-                <input className={s.InpSt} type={props.type} value={props.value} onChange={onchange} placeholder={props.placeholder}/>
+                <input className={s.InpSt} readOnly={props.readonly} type={props.type} value={props.value} onChange={onchange} placeholder={props.placeholder}/>
             </div>
         </div>
     );

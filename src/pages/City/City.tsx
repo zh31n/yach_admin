@@ -5,23 +5,46 @@ import YachtCard from "../../components/YachtCard/YachtCard";
 import ServiceCard from "../../components/ServiceCard/ServiceCard";
 import ModalAddYacht from "../../components/ModalAddYacht/ModalAddYacht";
 import ModalAddService from "../../components/ModalAddService/ModalAddService";
-import axios from "axios";
+import Api from "../../api/api";
+import {Navigate} from "react-router-dom";
+
+import {useParams} from "react-router-dom";
 
 const City = (props: any) => {
 
-    let yachtItems = props.cityPage.yachts.map(y => <YachtCard name={y.name} key={y.id} id={y.id}/>);
-    let servicesItems = props.cityPage.services.map(s => <ServiceCard key={s.id} name={s.name}/>);
+    if (!props.isAuth) {
+        return <Navigate to={'/'}/>
+    }
 
     let [modalYacht, setModalYacht] = useState(false);
     let [modalService, setModalService] = useState(false);
-    const [city, setCity] = useState([])
+    const [city, setCity] = useState(null);
+
+    let {userId} = useParams();
+
+    useEffect(() => {
+
+        Api.getTown(userId).then(res => {
+            setCity(res.data);
+        });
+    }, [setCity]);
+
+
+    if (!city) {
+        return <div>Загрузка</div>
+    }
+
+    let yachtItems = city.data.yachts.map(y => <YachtCard name={y.spec.name} key={y.id} id={y.id}/>);
+    let servicesItems = city.data.services.map(s => <ServiceCard key={s.id} name={s.name}/>);
+
+
 
 
     return (
         <div className={s.container}>
             {modalYacht && <ModalAddYacht setActive={setModalYacht}/>}
             {modalService && <ModalAddService setActive={setModalService}/>}
-            <div className={s.coord}>{props.cityPage.city}, {props.cityPage.country}</div>
+            <div className={s.coord}>{city.data.town.name}, {city.data.town.country}</div>
             <div className={s.content}>
                 <div className={s.seccont}>
                     <h3 className={s.titleYacht}>Яхты</h3>
@@ -43,8 +66,5 @@ const City = (props: any) => {
     );
 };
 
-let mstp = (state) => ({
-    cityPage: state.cities.cityPage
-})
 
-export default connect(mstp, {})(City);
+export default City;
