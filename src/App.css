@@ -52,3 +52,8 @@
 *::-webkit-scrollbar-thumb:active {
     background-color: #F7FF11;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}

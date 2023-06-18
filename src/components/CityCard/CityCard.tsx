@@ -2,12 +2,16 @@ import React from 'react';
 import s from './CityCard.module.scss'
 import {NavLink} from "react-router-dom";
 import Api from "../../api/api";
+import {useCookies} from "react-cookie";
 
 const CityCard = (props: any) => {
 
+    const [cookies, setCookie, removeCookie] = useCookies();
+
     const onClickDelete = (e) => {
+        const token = cookies.token;
         e.preventDefault();
-        Api.deleteTown(props.id).then(res => {
+        Api.deleteTown(props.id,token).then(res => {
             Api.getTowns().then(res => {
                 props.setCities(res.data)
             })

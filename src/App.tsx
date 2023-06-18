@@ -16,7 +16,7 @@ const App = (props: any) => {
             <Routes>
                 <Route path={'/'} element={<Login isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
                 <Route path={'/cities'} element={<Cities isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
-                <Route path={'/cities/:userId'} element={<City isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
+                <Route path={'/cities/:townId'} element={<City isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
                 <Route path={'/yachts/*'} element={<Yachta isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
             </Routes>
         </div>

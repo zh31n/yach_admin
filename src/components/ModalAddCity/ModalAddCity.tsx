@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import s from './ModalAddCity.module.scss'
 import CustomInput from "../CustomInput/CustomInput";
 import Api from "../../api/api";
+import {useCookies} from "react-cookie";
 
 const ModalAddCity = (props: any) => {
 
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
-    const [services, setServices] = useState([]);
+    const [cookies, setCookie, removeCookie] = useCookies();
     const [err, setErr] = useState([]);
+    const ref = useRef();
 
     const data = [
         {text: 'Город', type: 'text', value: city, setValue: setCity, id: 1},
@@ -19,7 +21,8 @@ const ModalAddCity = (props: any) => {
                                                   key={i.id}/>)
 
     const addCity = () => {
-        Api.addTown(city, country, services).then(res => {
+        const token = cookies.token;
+        Api.addTown(city, country, token).then(res => {
             props.setActive(false);
             Api.getTowns().then(res => {
                     props.setSities(res.data)

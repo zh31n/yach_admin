@@ -4,7 +4,7 @@ import s from './City.module.scss'
 import YachtCard from "../../components/YachtCard/YachtCard";
 import ServiceCard from "../../components/ServiceCard/ServiceCard";
 import ModalAddYacht from "../../components/ModalAddYacht/ModalAddYacht";
-import ModalAddService from "../../components/ModalAddService/ModalAddService";
+import ModalChangeService from "../../components/ModalChangeService/ModalChangeService";
 import Api from "../../api/api";
 import {Navigate} from "react-router-dom";
 
@@ -20,11 +20,11 @@ const City = (props: any) => {
     let [modalService, setModalService] = useState(false);
     const [city, setCity] = useState(null);
 
-    let {userId} = useParams();
+    let {townId} = useParams();
 
     useEffect(() => {
 
-        Api.getTown(userId).then(res => {
+        Api.getTown(townId).then(res => {
             setCity(res.data);
         });
     }, [setCity]);
@@ -35,20 +35,19 @@ const City = (props: any) => {
     }
 
     let yachtItems = city.data.yachts.map(y => <YachtCard name={y.spec.name} key={y.id} id={y.id}/>);
-    let servicesItems = city.data.services.map(s => <ServiceCard key={s.id} name={s.name}/>);
-
-
+    let servicesItems = city.data.services.map(s => <ServiceCard key={s.id} name={s.name} setModal={setModalService} />);
 
 
     return (
         <div className={s.container}>
-            {modalYacht && <ModalAddYacht setActive={setModalYacht}/>}
-            {modalService && <ModalAddService setActive={setModalService}/>}
+            {modalYacht && <ModalAddYacht city={city.data.town} setActive={setModalYacht}/>}
+            {modalService && <ModalChangeService setActive={setModalService}/>}
             <div className={s.coord}>{city.data.town.name}, {city.data.town.country}</div>
             <div className={s.content}>
                 <div className={s.seccont}>
                     <h3 className={s.titleYacht}>Яхты</h3>
                     <div className={s.yCont}>
+                        {/*{city.length == 0 ? yachtItems : 'Яхт нет'}*/}
                         {yachtItems}
                     </div>
                     <button onClick={() => setModalYacht(true)} className={s.addYacht}>+</button>
@@ -58,7 +57,6 @@ const City = (props: any) => {
                     <div className={s.sCont}>
                         {servicesItems}
                     </div>
-                    <button onClick={() => setModalService(true)} className={s.addYacht}>+</button>
                 </div>
             </div>
 
