@@ -3,9 +3,7 @@ import s from './CustomInput.module.scss';
 
 const CustomInput = (props:any) => {
 
-   const onchange = (e) => {
-       props.setValue(e.target.value)
-   }
+   const onchange = (e) => props.setValue(e.target.value);
 
     return (
         <div className={s.container}>

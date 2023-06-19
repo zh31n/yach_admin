@@ -22,12 +22,19 @@ let Api = {
     getTown(id) {
         return instance.get(`all-info?id=${id}`);
     },
-    deleteYacht(id) {
-        return instance.delete('yachts')
+    deleteYacht(id, token) {
+        return instance.delete(`yachts?token=${token}`, {data:{id:id}})
     },
-    addYachts(data,token){
-        return instance.post(`yachts?token=${token}`,data)
-    }
+    addYachts(data, token) {
+        return instance.post(`yachts?token=${token}`, data)
+    },
+    setInfoService(town,name){
+        return instance.get(`services?town=${town}&name=${name}`)
+    },
+    changeService(token,imgUrl,des,id){
+        return instance.post(`services?token=${token}`,{imageUrl:imgUrl,des:des,id:id})
+    },
+
 }
 
 export default Api;

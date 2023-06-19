@@ -6,7 +6,6 @@ import axios from "axios";
 import {useCookies} from "react-cookie";
 
 const ModalAddYacht = (props: any) => {
-
     const [file, setFile] = useState();
     const [model, setModel] = useState();
     const [name, setName] = useState();
@@ -42,41 +41,39 @@ const ModalAddYacht = (props: any) => {
     const ref = useRef();
 
     const inputItems = data.map(i => <CustomInput text={i.text} type={i.type} setValue={i.setValue} value={i.value}/>)
-    const onChangeInput = (e) => {
-
-        setFile(e.target.files[0])
-    }
+    const onChangeInput = (e) => setFile(e.target.files[0]);
     const createYacht = () => {
         const token = cookies.token;
-        const data = {
-            town: props.city,
-            imageUrl: 'http://45.12.73.221:80/file?filename=1687104511164-postImg.jpg',
-            model: model,
-            name: name,
-            manufacturer: maker,
-            clas: classing,
-            shipyard: verf,
-            year: year,
-            engine: engine,
-            width: wide,
-            length: length,
-            draught: osadka,
-            speed: speed,
-            number_of_cabins: count,
-            passenger_capacity: guys,
-            description: desc
-        }
-        // const formData = new FormData();
-        // formData.append('file', file);
-        // axios.post('http://45.12.73.221:80/img', formData,{headers:{"Content-Type": "multipart/form-data"}}).then(res => {
+        const formData = new FormData();
+        formData.append('file', file);
+        axios.post('http://45.12.73.221:80/img', formData, {headers: {"Content-Type": "multipart/form-data"}}).then(res => {
+                const data = {
+                    town: props.city.name,
+                    imageUrl: res.data.urlfile,
+                    model: model,
+                    name: name,
+                    manufacturer: maker,
+                    clas: classing,
+                    shipyard: verf,
+                    year: year,
+                    engine: engine,
+                    width: wide,
+                    length: length,
+                    draught: osadka,
+                    spead: speed,
+                    number_of_cabins: count,
+                    passenger_capacity: guys,
+                    description: desc
+                }
+                Api.addYachts(data, token,).then(res => {
+                    Api.getTown(props.townId).then(res => {
+                        props.setCity(res.data);
+                        props.setActive(false);
+                    })
 
-        // }
-        Api.addYachts(data, token).then(res => {
-            console.log(res.data)
-            console.log(token)
-            props.setActive(false)
-        })
-        // })
+                })
+            }
+        )
     }
 
     return (
@@ -99,6 +96,7 @@ const ModalAddYacht = (props: any) => {
     );
 
 
-};
+}
+
 
 export default ModalAddYacht;

@@ -5,7 +5,7 @@ import CustomInput from "../CustomInput/CustomInput";
 const ModalChangeYacht = (props: any) => {
 
     const data = [
-        {text: 'Модель', type: 'text',value},
+        {text: 'Модель', type: 'text',},
         {text: 'Название', type: 'text'},
         {text: 'Класс', type: 'text'},
         {text: 'Производитель', type: 'text'},
