@@ -6,6 +6,7 @@ import Api from "../../api/api";
 import ModalAddCity from "../../components/ModalAddCity/ModalAddCity";
 import ModalChangeCity from "../../components/ModalChangeCity/ModalChangeCity";
 import {Navigate} from "react-router-dom";
+import ModalAddUser from "../../components/ModalAddUser/ModalAddUser";
 
 const Cities = (props: any) => {
         if (!props.isAuth) {
@@ -16,6 +17,7 @@ const Cities = (props: any) => {
         const [cities, setSities] = useState([]);
         const [modalActive, setModalActive] = useState(false);
         const [modalChangeActive, setModalChangeActive] = useState(false);
+        const [modalUser, setModalUser] = useState(false);
 
         useEffect(() => {
             if (cities.length === 0) {
@@ -36,6 +38,7 @@ const Cities = (props: any) => {
             <div className={s.cities}>
                 {modalActive && <ModalAddCity setActive={setModalActive} setSities={setSities}/>}
                 {modalChangeActive && <ModalChangeCity currentCity={currentCity} setActive={setModalChangeActive}/>}
+                {modalUser && <ModalAddUser setActive={setModalUser}/>}
                 <h3 className={s.title}>Города</h3>
                 <div className={s.cityCont}>
                     {cities.length == 0 ? <span>Городов нет</span> : CityItems}
@@ -43,6 +46,10 @@ const Cities = (props: any) => {
                 <div className={s.btnCont}>
                     <CustomBtn setActive={setModalActive} title={'Добавить город'}/>
                 </div>
+                <div className={s.btnCont}>
+                    <CustomBtn setActive={setModalUser} title={'Добавить пользователя'}/>
+                </div>
+
             </div>
         );
     }

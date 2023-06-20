@@ -45,6 +45,9 @@ let Api = {
     },
     changeAbout(token, text, id) {
         return instance.patch(`about?token=${token}`, {text: text, id: id})
+    },
+    createUser(email, password) {
+        return instance.post('register', {email: email, password: password})
     }
 
 }
