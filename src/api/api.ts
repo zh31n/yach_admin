@@ -23,17 +23,29 @@ let Api = {
         return instance.get(`all-info?id=${id}`);
     },
     deleteYacht(id, token) {
-        return instance.delete(`yachts?token=${token}`, {data:{id:id}})
+        return instance.delete(`yachts?token=${token}`, {data: {id: id}})
     },
     addYachts(data, token) {
         return instance.post(`yachts?token=${token}`, data)
     },
-    setInfoService(town,name){
+    setInfoService(town, name) {
         return instance.get(`services?town=${town}&name=${name}`)
     },
-    changeService(token,imgUrl,des,id){
-        return instance.post(`services?token=${token}`,{imageUrl:imgUrl,des:des,id:id})
+    changeService(token, imgUrl, des, id) {
+        return instance.post(`services?token=${token}`, {imageUrl: imgUrl, des: des, id: id})
     },
+    getFaq(city) {
+        return instance.get(`faq?town=${city}`)
+    },
+    createFaq(token, town, question, answer) {
+        return instance.post(`faq?token=${token}`, {town: town, question: question, answer: answer})
+    },
+    deleteFaq(token, id) {
+        return instance.delete(`faq?token=${token}`, {data: {id: id}})
+    },
+    changeAbout(token, text, id) {
+        return instance.patch(`about?token=${token}`, {text: text, id: id})
+    }
 
 }
 

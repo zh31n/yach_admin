@@ -16,7 +16,6 @@ const ModalChangeService = (props: any) => {
     const serviceName = props.serviceName;
     const [cookies] = useCookies();
     const token = cookies.token;
-    // const [name]
     const onChangeInput = (e) => setFile(e.target.files[0]);
 
     const changeService = () => {
@@ -27,11 +26,7 @@ const ModalChangeService = (props: any) => {
             axios.post('http://45.12.73.221:80/img', formData, {headers: {"Content-Type": "multipart/form-data"}}).then(res => {
                     const imgUrl = res.data.urlfile;
                     const des = desc;
-
-                    Api.changeService(token, imgUrl, des, id).then(res => {
-                        console.log(res)
-                        props.setActive(false);
-                    })
+                    Api.changeService(token, imgUrl, des, id).then(res => props.setActive(false))
                 }
             )
         } else {

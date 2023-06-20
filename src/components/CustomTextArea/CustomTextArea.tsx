@@ -3,9 +3,7 @@ import s from './CustomTextArea.module.scss';
 
 const CustomTextArea = (props: any) => {
 
-    const onchange = (e) => {
-        props.setValue(e.target.value)
-    }
+    const onchange = (e) => props.setValue(e.target.value);
 
     return (
         <div className={s.container}>
