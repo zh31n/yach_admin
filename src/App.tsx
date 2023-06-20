@@ -9,7 +9,7 @@ import {useState} from "react";
 
 const App = (props: any) => {
 
-    const [isAuth, setIsAuth] = useState(true);
+    const [isAuth, setIsAuth] = useState(false);
 
     return (
         <div className='App'>

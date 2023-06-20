@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './ModalChangeAbout.module.scss'
 import CustomTextArea from "../CustomTextArea/CustomTextArea";
 import {useCookies} from "react-cookie";
