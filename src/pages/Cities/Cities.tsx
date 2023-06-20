@@ -37,7 +37,6 @@ const Cities = (props: any) => {
         return (
             <div className={s.cities}>
                 {modalActive && <ModalAddCity setActive={setModalActive} setSities={setSities}/>}
-                {modalChangeActive && <ModalChangeCity currentCity={currentCity} setActive={setModalChangeActive}/>}
                 {modalUser && <ModalAddUser setActive={setModalUser}/>}
                 <h3 className={s.title}>Города</h3>
                 <div className={s.cityCont}>

@@ -32,7 +32,6 @@ const CityCard = (props: any) => {
             <div className={s.name}>{props.name},{props.country}</div>
             <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
                 <div onClick={onClickDelete} className={s.btn}>Удалить</div>
-                <div onClick={onClickChange} className={s.btn}>Изменить</div>
             </div>
         </NavLink>
     );

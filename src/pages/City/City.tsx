@@ -32,7 +32,6 @@ const City = (props: any) => {
 
     useEffect(() => {
         Api.getTown(townId).then(res => {
-            console.log(res.data)
             setCity(res.data);
             setAbout(res.data.data.about.text);
             if (faqItems.length === 0) {
