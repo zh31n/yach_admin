@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-let instance = axios.create({baseURL: 'http://45.130.42.157:4000/api/'});
+let instance = axios.create({baseURL: 'http://45.130.42.157:4001/api/'});
 
 let Api = {
     login(email, password) {

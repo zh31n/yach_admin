@@ -21,7 +21,8 @@ const ModalAddYacht = (props: any) => {
     const [count, setCount] = useState();
     const [guys, setGuys] = useState();
     const [desc, setDesc] = useState();
-    const [cookies, setCookie, removeCookie] = useCookies();
+    const [price, setPrice] = useState();
+    const [cookies] = useCookies();
     const data = [
         {text: 'Модель', type: 'text', setValue: setModel, value: model},
         {text: 'Название', type: 'text', setValue: setName, value: name},
@@ -34,6 +35,7 @@ const ModalAddYacht = (props: any) => {
         {text: 'Ширина', type: 'number', setValue: setWide, value: wide},
         {text: 'Осадка', type: 'number', setValue: setOsadka, value: osadka},
         {text: 'Скорость', type: 'number', setValue: setSpeed, value: speed},
+        {text: 'Цена', type: 'number', setValue: setPrice, value: price},
         {text: 'Количество кают', type: 'number', setValue: setCount, value: count},
         {text: 'Пассажировместимость', type: 'number', setValue: setGuys, value: guys},
         {text: 'Описание', type: 'text', setValue: setDesc, value: desc},
@@ -63,7 +65,8 @@ const ModalAddYacht = (props: any) => {
                     spead: speed,
                     number_of_cabins: count,
                     passenger_capacity: guys,
-                    description: desc
+                    description: desc,
+                    price: price
                 }
                 Api.addYachts(data, token,).then(res => {
                     Api.getTown(props.townId).then(res => {
