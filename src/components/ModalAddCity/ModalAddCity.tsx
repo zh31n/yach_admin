@@ -22,7 +22,8 @@ const ModalAddCity = (props: any) => {
 
     const addCity = () => {
         const token = cookies.token;
-        Api.addTown(city, country, token).then(res => {
+        const town = city.toLowerCase();
+        Api.addTown(town, country, token).then(res => {
             props.setActive(false);
             Api.getTowns().then(res => {
                     props.setSities(res.data)
