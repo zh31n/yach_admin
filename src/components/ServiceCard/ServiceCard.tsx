@@ -6,7 +6,7 @@ const ServiceCard = (props: any) => {
 
     const onClickChange = (e) => {
         e.preventDefault();
-        props.setServiceName(props.name);
+        // props.setServiceName(props.name);
         props.setModal(true);
     }
 

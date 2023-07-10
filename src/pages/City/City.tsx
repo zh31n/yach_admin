@@ -12,6 +12,7 @@ import {useParams} from "react-router-dom";
 import FaqCard from "../../components/FaqCard/FaqCard";
 import ModalCreateFaq from "../../components/ModalCreateFaq/ModalCreateFaq";
 import ModalChangeAbout from "../../components/ModalChangeAbout/ModalChangeAbout";
+import ModalChangeCatering from "../../components/ModalChangeCatering/ModalChangeCatering";
 
 const City = (props: any) => {
 
@@ -23,6 +24,7 @@ const City = (props: any) => {
     let [modalService, setModalService] = useState(false);
     let [modalFaq, setModalFaq] = useState(false);
     let [modalAbout, setModalAbout] = useState(false);
+    let [modalChangeService, setModalChangeService] = useState(false);
     const [city, setCity] = useState(null);
     const [serviceName, setServiceName] = useState('');
     const [faqItems, setFaqItems] = useState([]);
@@ -63,7 +65,9 @@ const City = (props: any) => {
             {modalService && <ModalChangeService setActive={setModalService} townName={city.data.town.name}
                                                  serviceName={serviceName}/>}
             {modalFaq && <ModalCreateFaq setActive={setModalFaq} setFaqItems={setFaqItems} town={city.data.town.name}/>}
-            {modalAbout && <ModalChangeAbout setActive={setModalAbout} value={about} setValue={setAbout} id={city.data.about._id}/>}
+            {modalAbout && <ModalChangeAbout setActive={setModalAbout} value={about} setValue={setAbout}
+                                             id={city.data.about._id}/>}
+            { modalChangeService && <ModalChangeCatering setActive={setModalChangeService} town={city.data.town.name}  /> }
             <div className={s.coord}>{city.data.town.name}, {city.data.town.country}</div>
             <div className={s.content}>
                 <div className={s.seccont}>
@@ -77,6 +81,7 @@ const City = (props: any) => {
                     <h3 className={s.titleYacht}>Услуги</h3>
                     <div className={s.sCont}>
                         {servicesItems}
+                        <ServiceCard setModal={setModalChangeService} name={'Кейтеринг'}/>
                     </div>
                 </div>
             </div>

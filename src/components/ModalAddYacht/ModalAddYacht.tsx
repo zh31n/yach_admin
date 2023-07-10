@@ -6,7 +6,7 @@ import axios from "axios";
 import {useCookies} from "react-cookie";
 
 const ModalAddYacht = (props: any) => {
-    const [file, setFile] = useState();
+    const [file, setFile] = useState([]);
     const [model, setModel] = useState();
     const [name, setName] = useState();
     const [classing, setClassing] = useState();
@@ -41,42 +41,51 @@ const ModalAddYacht = (props: any) => {
         {text: 'Описание', type: 'text', setValue: setDesc, value: desc},
     ];
     const ref = useRef();
-
+    const [imgArray,setImgArray] = useState([]);
     const inputItems = data.map(i => <CustomInput text={i.text} type={i.type} setValue={i.setValue} value={i.value}/>)
-    const onChangeInput = (e) => setFile(e.target.files[0]);
+    const onChangeInput = (e) => {
+        setFile(el => [...el, e.target.files[0]])
+    };
     const createYacht = () => {
+        // console.log(file);
         const token = cookies.token;
-        const formData = new FormData();
-        formData.append('file', file);
-        axios.post('http://45.12.73.221:80/img', formData, {headers: {"Content-Type": "multipart/form-data"}}).then(res => {
-                const data = {
-                    town: props.city.name,
-                    imageUrl: res.data.urlfile,
-                    model: model,
-                    name: name,
-                    manufacturer: maker,
-                    clas: classing,
-                    shipyard: verf,
-                    year: year,
-                    engine: engine,
-                    width: wide,
-                    length: length,
-                    draught: osadka,
-                    spead: speed,
-                    number_of_cabins: count,
-                    passenger_capacity: guys,
-                    description: desc,
-                    price: price
-                }
-                Api.addYachts(data, token,).then(res => {
-                    Api.getTown(props.townId).then(res => {
-                        props.setCity(res.data);
-                        props.setActive(false);
-                    })
+        let imgUrls = [];
+        file.map(el => {
+            const formData = new FormData();
+            formData.append('file', el);
+            axios.post('http://62.113.104.182:80/img', formData, {headers: {"Content-Type": "multipart/form-data"}}).then(res => {
+                setImgArray( prev => [...prev,res.data.urlfile]);
+            })
+        })
+        const data = {
+            town: props.city.name,
+            imageUrls: imgArray,
+            model: model,
+            name: name,
+            manufacturer: maker,
+            clas: classing,
+            shipyard: verf,
+            year: year,
+            engine: engine,
+            width: wide,
+            length: length,
+            draught: osadka,
+            spead: speed,
+            number_of_cabins: count,
+            passenger_capacity: guys,
+            description: desc,
+            price: price
+        }
 
-                })
-            }
-        )
+        Api.addYachts(data,token).then(res => {
+            console.log(res.data)
+            props.setActive(false);
+            Api.getTown(props.townId).then(res =>{
+                props.setCity(res.data)
+            })
+
+
+        })
     }
 
     return (
@@ -90,8 +99,8 @@ const ModalAddYacht = (props: any) => {
                     </div>
                 </form>
                 <button onClick={() => ref.current.click()} className={s.btn}
-                        style={{width: '130px', marginBottom: '10px'}}>
-                    {file ? 'Изменить фото' : 'Добавить фото'}
+                        style={{width: '150px', marginBottom: '10px'}}>
+                    {file ? 'Добавить еще фото' : 'Добавить фото'}
                 </button>
                 <button onClick={createYacht} className={s.btn}>Добавить</button>
             </div>

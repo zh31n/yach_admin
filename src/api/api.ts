@@ -48,6 +48,12 @@ let Api = {
     },
     createUser(email, password) {
         return instance.post('register', {email: email, password: password})
+    },
+    changeCatering(id, pages) {
+        return instance.post('services/catering', {id, pages})
+    },
+    getCatering(town){
+        return instance.get(`services/catering?town=${town}`)
     }
 
 }
