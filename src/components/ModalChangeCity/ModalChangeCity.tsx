@@ -2,29 +2,34 @@ import React, {useState} from 'react';
 import s from './ModalChangeCity.module.scss'
 import CustomInput from "../CustomInput/CustomInput";
 import Api from "../../api/api";
+import {useCookies} from "react-cookie";
 
 const ModalChangeCity = (props: any) => {
 
-    let [city, setCity] = useState('');
-    let [country, setCountry] = useState('');
-    let [services, setServices] = useState([]);
+    let [city, setCity] = useState(props.currentCity.name);
+    let [country, setCountry] = useState(props.currentCity.country);
     let [err, setErr] = useState([]);
 
-    city = props.currentCity.name;
-    country = props.currentCity.country;
+    const [cookies] = useCookies()
+    const token = cookies.token;
+
+    const id = props.currentCity.id;
 
     const data = [
-        {text: 'Город', type: 'text', value: city, setValue: setCity, readonly: true, id: 1},
-        {text: 'Страна', type: 'text', value: country, setValue: setCountry, readonly: true, id: 2},
-        {text: 'Услуги', type: 'text', value: services, setValue: setServices, readonly: false, id: 3}
+        {text: 'Город', type: 'text', value: city, setValue: setCity, id: 1},
+        {text: 'Страна', type: 'text', value: country, setValue: setCountry, id: 2},
     ];
 
-    const inputItems = data.map(i => <CustomInput text={i.text} readonly={i.readonly} type={i.type} value={i.value}
+    const inputItems = data.map(i => <CustomInput text={i.text} type={i.type} value={i.value}
                                                   setValue={i.setValue} key={i.id}/>)
 
     const changeCity = () => {
-        Api.changeTown(city, country, services).then(res => props.setActive(false))
-
+        Api.changeTown(id,city,country,token).then(res => {
+            props.setActive(false)
+            Api.getTowns().then(res => {
+                props.setSities(res.data)
+            })
+        })
     };
 
     return (

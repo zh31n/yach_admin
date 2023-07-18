@@ -6,7 +6,7 @@ import ServiceCard from "../../components/ServiceCard/ServiceCard";
 import ModalAddYacht from "../../components/ModalAddYacht/ModalAddYacht";
 import ModalChangeService from "../../components/ModalChangeService/ModalChangeService";
 import Api from "../../api/api";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 import {useParams} from "react-router-dom";
 import FaqCard from "../../components/FaqCard/FaqCard";
@@ -68,6 +68,7 @@ const City = (props: any) => {
             {modalAbout && <ModalChangeAbout setActive={setModalAbout} value={about} setValue={setAbout}
                                              id={city.data.about._id}/>}
             { modalChangeService && <ModalChangeCatering setActive={setModalChangeService} town={city.data.town.name}  /> }
+            <Link className={s.btn} to={'/cities'}>Города</Link>
             <div className={s.coord}>{city.data.town.name}, {city.data.town.country}</div>
             <div className={s.content}>
                 <div className={s.seccont}>

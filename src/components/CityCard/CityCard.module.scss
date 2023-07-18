@@ -1,8 +1,16 @@
 .name{
+  display: flex;
   font-size: 18px;
   color: white;
   text-shadow: 1px 1px 7px black;
   margin-bottom: 1rem;
+  span{
+    display: block;
+    &:first-letter{
+      text-transform: uppercase;
+    }
+
+  }
 }
 
 .card{

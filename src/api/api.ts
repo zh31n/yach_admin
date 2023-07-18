@@ -16,8 +16,8 @@ let Api = {
     deleteTown(id, token) {
         return instance.delete(`town?token=${token}`, {data: {id: id}})
     },
-    changeTown(name, country, services) {
-        return instance.patch('town', {name, country, services})
+    changeTown(id, name, country, token) {
+        return instance.post(`town/change?token=${token}`, {id: id, name: name, country: country})
     },
     getTown(id) {
         return instance.get(`all-info?id=${id}`);
@@ -52,7 +52,7 @@ let Api = {
     changeCatering(id, pages) {
         return instance.post('services/catering', {id, pages})
     },
-    getCatering(town){
+    getCatering(town) {
         return instance.get(`services/catering?town=${town}`)
     }
 
