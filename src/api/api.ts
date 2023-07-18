@@ -54,6 +54,15 @@ let Api = {
     },
     getCatering(town) {
         return instance.get(`services/catering?town=${town}`)
+    },
+    changeYacht(data,token){
+        return instance.post(`yachts/change?token=${token}`, {...data})
+    },
+    getYacht(id){
+        return instance.get(`yachts/id?id=${id}`);
+    },
+    getYachts(){
+        return instance.get('yachts')
     }
 
 }

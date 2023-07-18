@@ -1,18 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
 import s from './City.module.scss'
 import YachtCard from "../../components/YachtCard/YachtCard";
 import ServiceCard from "../../components/ServiceCard/ServiceCard";
 import ModalAddYacht from "../../components/ModalAddYacht/ModalAddYacht";
 import ModalChangeService from "../../components/ModalChangeService/ModalChangeService";
 import Api from "../../api/api";
-import {Link, Navigate} from "react-router-dom";
-
-import {useParams} from "react-router-dom";
+import {Link, Navigate, useParams} from "react-router-dom";
 import FaqCard from "../../components/FaqCard/FaqCard";
 import ModalCreateFaq from "../../components/ModalCreateFaq/ModalCreateFaq";
 import ModalChangeAbout from "../../components/ModalChangeAbout/ModalChangeAbout";
 import ModalChangeCatering from "../../components/ModalChangeCatering/ModalChangeCatering";
+import ModalChangeYacht from "../../components/ModalChangeYacht/ModalChangeYacht";
 
 const City = (props: any) => {
 
@@ -25,10 +23,13 @@ const City = (props: any) => {
     let [modalFaq, setModalFaq] = useState(false);
     let [modalAbout, setModalAbout] = useState(false);
     let [modalChangeService, setModalChangeService] = useState(false);
+    let [modalChangeYacht, setModalChangeYacht] = useState(false);
+    let [yachts, setYachts] = useState([])
     const [city, setCity] = useState(null);
     const [serviceName, setServiceName] = useState('');
     const [faqItems, setFaqItems] = useState([]);
     const [about, setAbout] = useState('');
+    const [currentYacht, setCurrentYacht] = useState({});
 
     let {townId} = useParams();
 
@@ -42,6 +43,7 @@ const City = (props: any) => {
                 })
             }
         });
+        Api.getYachts().then(res => setYachts(res.data))
     }, [setCity, setFaqItems]);
 
 
@@ -49,8 +51,10 @@ const City = (props: any) => {
         return <div>Загрузка</div>
     }
 
-    let yachtItems = city.data.yachts.map(y => <YachtCard name={y.spec.name} key={y.id} id={y.id} townId={townId}
-                                                          setCity={setCity}/>);
+    let yachtItems = yachts.map(y => <YachtCard name={y.spec.name} setData={setCurrentYacht} data={y}
+                                                setActive={setModalChangeYacht} key={y._id} id={y._id}
+                                                townId={townId} setYachts={setYachts}
+                                                setCity={setCity}/>);
     let servicesItems = city.data.services.map(s => <ServiceCard key={s._id} id={s._id} name={s.name}
                                                                  setServiceName={setServiceName}
                                                                  setModal={setModalService}/>);
@@ -67,7 +71,8 @@ const City = (props: any) => {
             {modalFaq && <ModalCreateFaq setActive={setModalFaq} setFaqItems={setFaqItems} town={city.data.town.name}/>}
             {modalAbout && <ModalChangeAbout setActive={setModalAbout} value={about} setValue={setAbout}
                                              id={city.data.about._id}/>}
-            { modalChangeService && <ModalChangeCatering setActive={setModalChangeService} town={city.data.town.name}  /> }
+            {modalChangeService && <ModalChangeCatering setActive={setModalChangeService} town={city.data.town.name}/>}
+            {modalChangeYacht && <ModalChangeYacht setActive={setModalChangeYacht} setYachts={setYachts} city={city} yacht={currentYacht}/>}
             <Link className={s.btn} to={'/cities'}>Города</Link>
             <div className={s.coord}>{city.data.town.name}, {city.data.town.country}</div>
             <div className={s.content}>

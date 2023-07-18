@@ -1,28 +1,32 @@
 import React, {useRef, useState} from 'react';
-import s from './ModalAddYacht.module.scss'
+import s from './ModalChangeYacht.module.scss'
 import CustomInput from "../CustomInput/CustomInput";
 import Api from "../../api/api";
 import axios from "axios";
 import {useCookies} from "react-cookie";
+import {PhotoItem} from "../ModalAddYacht/ModalAddYacht";
 
-const ModalAddYacht = (props: any) => {
-    const [file, setFile] = useState([]);
-    const [model, setModel] = useState();
-    const [name, setName] = useState();
-    const [classing, setClassing] = useState();
-    const [maker, setMaker] = useState();
-    const [verf, setVerf] = useState();
-    const [year, setYear] = useState();
-    const [engine, setEngine] = useState();
-    const [length, setLength] = useState();
-    const [wide, setWide] = useState();
-    const [osadka, setOsadka] = useState();
-    const [speed, setSpeed] = useState();
-    const [count, setCount] = useState();
-    const [guys, setGuys] = useState();
-    const [desc, setDesc] = useState();
-    const [price, setPrice] = useState();
+const ModalChangeYacht = (props: any) => {
+
+    const yacht = props.yacht;
+    const [file, setFile] = useState([...yacht.image]);
+    const [model, setModel] = useState(yacht.spec.model);
+    const [name, setName] = useState(yacht.spec.name);
+    const [classing, setClassing] = useState(yacht.spec.class);
+    const [maker, setMaker] = useState(yacht.spec.manufacturer);
+    const [verf, setVerf] = useState(yacht.spec.shipyard);
+    const [year, setYear] = useState(yacht.spec.year);
+    const [engine, setEngine] = useState(yacht.spec.engine);
+    const [length, setLength] = useState(yacht.spec.length);
+    const [wide, setWide] = useState(yacht.spec.width);
+    const [osadka, setOsadka] = useState(yacht.spec.draught);
+    const [speed, setSpeed] = useState(yacht.spec.spead);
+    const [count, setCount] = useState(yacht.spec.number_of_cabins);
+    const [guys, setGuys] = useState(yacht.spec.passenger_capacity);
+    const [desc, setDesc] = useState(yacht.description);
+    const [price, setPrice] = useState(yacht.price);
     const [cookies] = useCookies();
+
     const data = [
         {text: 'Модель', type: 'text', setValue: setModel, value: model},
         {text: 'Название', type: 'text', setValue: setName, value: name},
@@ -40,9 +44,12 @@ const ModalAddYacht = (props: any) => {
         {text: 'Пассажировместимость', type: 'number', setValue: setGuys, value: guys},
         {text: 'Описание', type: 'text', setValue: setDesc, value: desc},
     ];
-    const photos = file.map(p => <PhotoItem img={p}/>)
     const ref = useRef();
+
+
     const inputItems = data.map(i => <CustomInput text={i.text} type={i.type} setValue={i.setValue} value={i.value}/>)
+    const photos = file.map(p => <PhotoItem img={p}/>)
+
     const onChangeInput = (e) => {
         let data = new FormData();
         data.append('file', e.target.files[0])
@@ -50,10 +57,10 @@ const ModalAddYacht = (props: any) => {
             setFile(prev => [...prev, res.data.urlfile])
         })
     };
-    const createYacht = () => {
+    const changeYacht = () => {
         const token = cookies.token;
         const data = {
-            town: props.city.name,
+            id: yacht._id,
             imageUrls: file,
             model: model,
             name: name,
@@ -71,11 +78,10 @@ const ModalAddYacht = (props: any) => {
             description: desc,
             price: price
         }
-
-        Api.addYachts(data, token).then(res => {
-            props.setActive(false);
-            Api.getTown(props.townId).then(res => {
-                props.setCity(res.data)
+        Api.changeYacht(data, token).then(res => {
+            props.setActive(false)
+            Api.getYachts().then(res => {
+                props.setYachts(res.data)
             })
         })
     }
@@ -86,7 +92,7 @@ const ModalAddYacht = (props: any) => {
                 <form className={s.inpCont}>
                     <div>
                         {inputItems}
-                        <input ref={ref} onChange={(e) => onChangeInput(e)} type={'file'}
+                        <input ref={ref} onChange={onChangeInput} type={'file'}
                                style={{display: 'none'}}/>
                         <div className={s.photoCont}>
                             {photos}
@@ -97,21 +103,11 @@ const ModalAddYacht = (props: any) => {
                         style={{width: '150px', marginBottom: '10px'}}>
                     {file.length !== 0 ? 'Добавить еще фото' : 'Добавить фото'}
                 </button>
-                <button onClick={createYacht} className={s.btn}>Добавить</button>
+                <button onClick={changeYacht} className={s.btn}>Изменить</button>
             </div>
         </div>
     );
-
-
-}
-
-export const PhotoItem = (props) => {
-    return (
-        <div className={s.photo}>
-            <img src={props.img} alt="image"/>
-        </div>
-    )
 }
 
 
-export default ModalAddYacht;
+export default ModalChangeYacht;
